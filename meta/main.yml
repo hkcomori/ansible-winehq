@@ -13,6 +13,7 @@ galaxy_info:
         - groovy
         - focal
         - bionic
+        - jammy
     - name: Debian
       versions:
         - buster

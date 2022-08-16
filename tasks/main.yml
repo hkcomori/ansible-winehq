@@ -19,16 +19,22 @@
 - name: Add apt key to trust apt repo
   become: yes
   become_user: root
-  apt_key:
+  get_url:
     url: '{{winehq_apt_key_url}}'
-    state: present
+    dest: /usr/share/keyrings/winehq-archive.key
+    owner: root
+    group: root
+    mode: '0600'
 
 - name: Add apt repo
   become: yes
   become_user: root
-  apt_repository:
-    repo: '{{winehq_apt_repo_url}}'
-    state: present
+  template:
+    src: winehq.sources.j2
+    dest: '/etc/apt/sources.list.d/winehq-{{ ansible_distribution_release }}.sources'
+    owner: root
+    group: root
+    mode: '0600'
 
 - name: Install winehq packages
   become: yes
